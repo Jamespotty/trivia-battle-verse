@@ -83,13 +83,22 @@ const GameCard: React.FC<GameCardProps> = ({
                 Join Game
               </Button>
             </Link>
+          ) : status === "in-progress" ? (
+            <Link to={`/game/${id}`} className="w-full">
+              <Button
+                className="w-full transition-all"
+                variant="outline"
+              >
+                Spectate
+              </Button>
+            </Link>
           ) : (
             <Button
               className="w-full transition-all"
-              variant={status === "in-progress" ? "outline" : "ghost"}
-              disabled={status === "completed"}
+              variant="ghost"
+              disabled={true}
             >
-              {status === "in-progress" ? "Spectate" : "Game Ended"}
+              Game Ended
             </Button>
           )}
         </div>

@@ -23,6 +23,13 @@ const QuestionCard: React.FC<QuestionCardProps> = ({
   const [timeLeft, setTimeLeft] = useState(timeLimit);
   const [isAnswered, setIsAnswered] = useState(false);
 
+  // Reset state when question changes
+  useEffect(() => {
+    setSelectedAnswer(null);
+    setTimeLeft(timeLimit);
+    setIsAnswered(false);
+  }, [question, timeLimit]);
+
   useEffect(() => {
     if (timeLeft > 0 && !isAnswered) {
       const timer = setTimeout(() => {

@@ -61,6 +61,7 @@ const Game = () => {
     { sender: "System", text: "Welcome to the game! Good luck!", timestamp: new Date() },
   ]);
   const [newMessage, setNewMessage] = useState("");
+  const [answeredQuestions, setAnsweredQuestions] = useState<Set<number>>(new Set());
 
   const currentQuestion = MOCK_QUESTIONS[currentQuestionIndex];
   const timeLimit = 15; // seconds per question
@@ -91,6 +92,10 @@ const Game = () => {
   };
 
   const handleAnswer = (answer: string) => {
+    if (answeredQuestions.has(currentQuestionIndex)) {
+      return; // Prevent answering the same question multiple times
+    }
+
     const updatedPlayers = [...players];
     const playerIndex = updatedPlayers.findIndex((p) => p.name === "You");
     
@@ -98,12 +103,19 @@ const Game = () => {
       const points = 100; // In a real app, points could be based on time taken to answer
       updatedPlayers[playerIndex].score += points;
       toast.success(`Correct! +${points} points`);
+    } else if (answer === "") {
+      toast.error("Time's up!");
     } else {
       toast.error("Incorrect answer");
     }
     
     setPlayers(updatedPlayers);
     setShowResult(true);
+    
+    // Mark this question as answered
+    const newAnsweredQuestions = new Set(answeredQuestions);
+    newAnsweredQuestions.add(currentQuestionIndex);
+    setAnsweredQuestions(newAnsweredQuestions);
     
     // Simulate other players answering
     simulateOtherPlayersAnswering();
@@ -151,6 +163,18 @@ const Game = () => {
   };
 
   const handlePlayAgain = () => {
+    // Reset game state
+    setCurrentQuestionIndex(0);
+    setPlayers(MOCK_PLAYERS.map(player => ({ ...player, score: 0 })));
+    setShowResult(false);
+    setGameEnded(false);
+    setCountdown(3);
+    setIsCountingDown(true);
+    setAnsweredQuestions(new Set());
+    setMessages([{ sender: "System", text: "Welcome to the game! Good luck!", timestamp: new Date() }]);
+  };
+
+  const handleLeaveLobby = () => {
     navigate("/lobby");
   };
 
@@ -180,7 +204,7 @@ const Game = () => {
                   <Button
                     variant="outline"
                     size="sm"
-                    onClick={() => navigate("/lobby")}
+                    onClick={handleLeaveLobby}
                   >
                     Leave Game
                   </Button>
@@ -231,8 +255,11 @@ const Game = () => {
                         ))}
                       </div>
                     </div>
-                    <div className="flex justify-center">
-                      <Button onClick={handlePlayAgain}>
+                    <div className="flex justify-center gap-4">
+                      <Button onClick={handlePlayAgain} variant="primary">
+                        Play Again
+                      </Button>
+                      <Button onClick={handleLeaveLobby} variant="outline">
                         Back to Lobby
                       </Button>
                     </div>
