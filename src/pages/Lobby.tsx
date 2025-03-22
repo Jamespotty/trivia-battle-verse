@@ -147,7 +147,7 @@ const Lobby = () => {
   };
 
   return (
-    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 page-transition">
+    <div className="min-h-screen bg-sky-100 page-transition">
       <Navbar />
 
       <div className="container mx-auto px-4 pt-32 pb-16 md:pt-40 md:pb-24">
