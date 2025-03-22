@@ -2,6 +2,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
+import { Badge } from "./ui/badge";
 
 export interface GameCardProps {
   id: string;
@@ -24,57 +25,67 @@ const GameCard: React.FC<GameCardProps> = ({
   difficulty,
   status,
 }) => {
-  const statusColors = {
-    waiting: "bg-green-100 text-green-800",
-    "in-progress": "bg-yellow-100 text-yellow-800",
-    completed: "bg-gray-100 text-gray-800",
+  const statusVariants = {
+    waiting: "bg-emerald-100 text-emerald-800 border-emerald-200",
+    "in-progress": "bg-amber-100 text-amber-800 border-amber-200",
+    completed: "bg-slate-100 text-slate-800 border-slate-200",
   };
 
-  const difficultyColors = {
-    easy: "bg-blue-100 text-blue-800",
-    medium: "bg-purple-100 text-purple-800",
-    hard: "bg-red-100 text-red-800",
+  const difficultyVariants = {
+    easy: "bg-blue-100 text-blue-800 border-blue-200",
+    medium: "bg-purple-100 text-purple-800 border-purple-200",
+    hard: "bg-rose-100 text-rose-800 border-rose-200",
   };
 
   const isJoinable = status === "waiting" && players < maxPlayers;
+  
+  const playerCountColor = players >= maxPlayers 
+    ? "text-rose-600" 
+    : players >= maxPlayers * 0.8 
+      ? "text-amber-600" 
+      : "text-emerald-600";
 
   return (
-    <div className="card-hover bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden">
+    <div className="card-hover bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300">
       <div className="p-5">
         <div className="flex justify-between items-start mb-3">
-          <h3 className="font-medium text-lg">{title}</h3>
+          <h3 className="font-medium text-lg text-gray-900">{title}</h3>
           <span
             className={`${
-              statusColors[status]
-            } text-xs font-medium px-2.5 py-0.5 rounded-full`}
+              statusVariants[status]
+            } text-xs font-semibold px-2.5 py-0.5 rounded-full border`}
           >
             {status.replace("-", " ")}
           </span>
         </div>
         
         <div className="flex items-center text-sm text-gray-500 mb-4">
-          <span className="mr-2">Hosted by {host}</span>
+          <span className="mr-2 font-medium text-gray-700">Hosted by {host}</span>
           <span className="mx-2">•</span>
-          <span>{players}/{maxPlayers} players</span>
+          <span className={playerCountColor}>
+            <span className="font-semibold">{players}</span>/{maxPlayers} players
+          </span>
         </div>
         
         <div className="flex items-center gap-2 mb-4">
-          <span className="bg-gray-100 text-gray-800 text-xs font-medium px-2.5 py-0.5 rounded-full">
+          <Badge variant="outline" className="bg-gray-50 border-gray-200 text-gray-700">
             {category}
-          </span>
-          <span className={`${difficultyColors[difficulty]} text-xs font-medium px-2.5 py-0.5 rounded-full`}>
+          </Badge>
+          <Badge className={`${difficultyVariants[difficulty]} border`}>
             {difficulty}
-          </span>
+          </Badge>
         </div>
         
-        <div className="mt-4">
+        <div className="mt-6">
           {isJoinable ? (
             <Link to={`/game/${id}`} className="w-full">
-              <Button className="w-full">Join Game</Button>
+              <Button className="w-full transform hover:translate-y-[-2px] transition-all">
+                Join Game
+              </Button>
             </Link>
           ) : (
             <Button
-              className="w-full"
+              className="w-full transition-all"
               variant={status === "in-progress" ? "outline" : "ghost"}
               disabled={status === "completed"}
             >

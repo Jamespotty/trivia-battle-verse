@@ -1,3 +1,4 @@
+
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Button from "@/components/Button";
@@ -5,6 +6,8 @@ import GameCard from "@/components/GameCard";
 import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, DialogFooter } from "@/components/ui/dialog";
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
+import { Input } from "@/components/ui/input";
+import { Badge } from "@/components/ui/badge";
 
 interface Game {
   id: string;
@@ -144,26 +147,29 @@ const Lobby = () => {
   };
 
   return (
-    <div className="min-h-screen bg-secondary/30 page-transition">
+    <div className="min-h-screen bg-gradient-to-b from-slate-50 to-slate-100 page-transition">
       <Navbar />
 
       <div className="container mx-auto px-4 pt-32 pb-16 md:pt-40 md:pb-24">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold">Game Lobby</h1>
+            <h1 className="text-3xl font-bold text-gray-900">Game Lobby</h1>
             <p className="text-muted-foreground">
               Join an existing game or create your own
             </p>
           </div>
-          <Button onClick={() => setShowCreateDialog(true)}>
+          <Button 
+            onClick={() => setShowCreateDialog(true)}
+            className="animate-pulse hover:animate-none"
+          >
             Create New Game
           </Button>
         </div>
 
-        <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-6 mb-8">
+        <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 mb-8 animate-fade-in">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
-              <input
+              <Input
                 type="text"
                 placeholder="Search games..."
                 value={searchQuery}
@@ -199,18 +205,21 @@ const Lobby = () => {
         </div>
 
         {filteredGames.length > 0 ? (
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 animate-fade-in">
             {filteredGames.map((game) => (
               <GameCard key={game.id} {...game} />
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-sm border border-gray-100 p-12 text-center">
+          <div className="bg-white rounded-xl shadow-md border border-gray-100 p-12 text-center animate-fade-in">
             <h3 className="text-xl font-medium mb-2">No games found</h3>
             <p className="text-muted-foreground mb-6">
               Try adjusting your filters or create a new game
             </p>
-            <Button onClick={() => setShowCreateDialog(true)}>
+            <Button 
+              onClick={() => setShowCreateDialog(true)}
+              className="animate-pulse hover:animate-none"
+            >
               Create New Game
             </Button>
           </div>
@@ -218,7 +227,7 @@ const Lobby = () => {
       </div>
 
       <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
-        <DialogContent className="sm:max-w-md">
+        <DialogContent className="sm:max-w-md animate-scale-in">
           <DialogHeader>
             <DialogTitle>Create New Game</DialogTitle>
             <DialogDescription>
@@ -230,7 +239,7 @@ const Lobby = () => {
               <label className="text-sm font-medium text-gray-700">
                 Game Title
               </label>
-              <input
+              <Input
                 type="text"
                 value={newGameTitle}
                 onChange={(e) => setNewGameTitle(e.target.value)}
