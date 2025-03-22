@@ -1,4 +1,3 @@
-
 import React, { useState } from "react";
 import Navbar from "@/components/Navbar";
 import Button from "@/components/Button";
@@ -7,8 +6,18 @@ import { Dialog, DialogContent, DialogHeader, DialogTitle, DialogDescription, Di
 import { useNavigate } from "react-router-dom";
 import { toast } from "sonner";
 
-// Mock data for game rooms
-const MOCK_GAMES = [
+interface Game {
+  id: string;
+  title: string;
+  host: string;
+  players: number;
+  maxPlayers: number;
+  category: string;
+  difficulty: "easy" | "medium" | "hard";
+  status: "waiting" | "in-progress" | "completed";
+}
+
+const MOCK_GAMES: Game[] = [
   {
     id: "1",
     title: "Science Trivia",
@@ -16,8 +25,8 @@ const MOCK_GAMES = [
     players: 3,
     maxPlayers: 6,
     category: "Science",
-    difficulty: "medium" as const,
-    status: "waiting" as const,
+    difficulty: "medium",
+    status: "waiting",
   },
   {
     id: "2",
@@ -26,8 +35,8 @@ const MOCK_GAMES = [
     players: 6,
     maxPlayers: 6,
     category: "Entertainment",
-    difficulty: "hard" as const,
-    status: "in-progress" as const,
+    difficulty: "hard",
+    status: "in-progress",
   },
   {
     id: "3",
@@ -36,8 +45,8 @@ const MOCK_GAMES = [
     players: 2,
     maxPlayers: 8,
     category: "General",
-    difficulty: "easy" as const,
-    status: "waiting" as const,
+    difficulty: "easy",
+    status: "waiting",
   },
   {
     id: "4",
@@ -46,8 +55,8 @@ const MOCK_GAMES = [
     players: 4,
     maxPlayers: 4,
     category: "History",
-    difficulty: "hard" as const,
-    status: "completed" as const,
+    difficulty: "hard",
+    status: "completed",
   },
   {
     id: "5",
@@ -56,8 +65,8 @@ const MOCK_GAMES = [
     players: 2,
     maxPlayers: 6,
     category: "Sports",
-    difficulty: "medium" as const,
-    status: "waiting" as const,
+    difficulty: "medium",
+    status: "waiting",
   },
   {
     id: "6",
@@ -66,8 +75,8 @@ const MOCK_GAMES = [
     players: 1,
     maxPlayers: 4,
     category: "Geography",
-    difficulty: "easy" as const,
-    status: "waiting" as const,
+    difficulty: "easy",
+    status: "waiting",
   },
 ];
 
@@ -84,7 +93,7 @@ const CATEGORIES = [
 const DIFFICULTIES = ["All", "Easy", "Medium", "Hard"];
 
 const Lobby = () => {
-  const [games, setGames] = useState(MOCK_GAMES);
+  const [games, setGames] = useState<Game[]>(MOCK_GAMES);
   const [selectedCategory, setSelectedCategory] = useState("All");
   const [selectedDifficulty, setSelectedDifficulty] = useState("All");
   const [searchQuery, setSearchQuery] = useState("");
@@ -116,22 +125,21 @@ const Lobby = () => {
       return;
     }
 
-    const newGame = {
+    const newGame: Game = {
       id: `${games.length + 1}`,
       title: newGameTitle,
-      host: "You", // In a real app, this would be the current user's username
+      host: "You",
       players: 1,
       maxPlayers: newGameMaxPlayers,
       category: newGameCategory,
       difficulty: newGameDifficulty,
-      status: "waiting" as const,
+      status: "waiting",
     };
 
     setGames([newGame, ...games]);
     setShowCreateDialog(false);
     toast.success("Game created successfully!");
     
-    // Navigate to the newly created game
     navigate(`/game/${newGame.id}`);
   };
 
@@ -209,7 +217,6 @@ const Lobby = () => {
         )}
       </div>
 
-      {/* Create Game Dialog */}
       <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
         <DialogContent className="sm:max-w-md">
           <DialogHeader>

@@ -3,7 +3,7 @@ import React from "react";
 import { Link } from "react-router-dom";
 import Button from "./Button";
 
-interface GameCardProps {
+export interface GameCardProps {
   id: string;
   title: string;
   host: string;
