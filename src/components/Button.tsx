@@ -13,10 +13,10 @@ const Button = React.forwardRef<HTMLButtonElement, ButtonProps>(
     const baseStyles = "inline-flex items-center justify-center font-medium transition-all rounded-full focus:outline-none focus:ring-2 focus:ring-offset-2 disabled:opacity-50 disabled:pointer-events-none";
     
     const variants = {
-      primary: "bg-primary text-primary-foreground hover:bg-primary/90 focus:ring-primary/30",
-      secondary: "bg-secondary text-secondary-foreground hover:bg-secondary/80 focus:ring-secondary/30",
-      outline: "border border-input bg-transparent hover:bg-secondary focus:ring-primary/30",
-      ghost: "hover:bg-secondary focus:ring-primary/30",
+      primary: "bg-blue-600 text-white hover:bg-blue-700 focus:ring-blue-300",
+      secondary: "bg-white text-gray-800 hover:bg-gray-100 focus:ring-gray-300",
+      outline: "border border-gray-300 bg-transparent hover:bg-gray-100 focus:ring-blue-300",
+      ghost: "hover:bg-gray-100 text-gray-700 focus:ring-blue-300",
     };
     
     const sizes = {

@@ -147,26 +147,27 @@ const Lobby = () => {
   };
 
   return (
-    <div className="min-h-screen bg-sky-100 page-transition">
+    <div className="min-h-screen bg-sky-50 page-transition">
       <Navbar />
 
       <div className="container mx-auto px-4 pt-32 pb-16 md:pt-40 md:pb-24">
         <div className="flex flex-col md:flex-row justify-between items-start md:items-center mb-8 gap-4">
           <div>
-            <h1 className="text-3xl font-bold text-gray-900">Game Lobby</h1>
-            <p className="text-muted-foreground">
+            <div className="inline-block bg-blue-50 text-blue-600 rounded-full px-3 py-1 text-sm font-medium mb-2">Find your game</div>
+            <h1 className="text-3xl font-bold text-gray-800">Game Lobby</h1>
+            <p className="text-gray-600">
               Join an existing game or create your own
             </p>
           </div>
           <Button 
             onClick={() => setShowCreateDialog(true)}
-            className="animate-pulse hover:animate-none"
+            className="animate-pulse hover:animate-none shadow-md"
           >
             Create New Game
           </Button>
         </div>
 
-        <div className="bg-white rounded-xl shadow-md border border-gray-100 p-6 mb-8 animate-fade-in">
+        <div className="glass rounded-xl shadow-md p-6 mb-8 animate-fade-in">
           <div className="flex flex-col md:flex-row gap-4">
             <div className="flex-1">
               <Input
@@ -174,14 +175,14 @@ const Lobby = () => {
                 placeholder="Search games..."
                 value={searchQuery}
                 onChange={(e) => setSearchQuery(e.target.value)}
-                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50"
+                className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300"
               />
             </div>
             <div className="flex gap-4">
               <select
                 value={selectedCategory}
                 onChange={(e) => setSelectedCategory(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white"
               >
                 {CATEGORIES.map((category) => (
                   <option key={category} value={category}>
@@ -192,7 +193,7 @@ const Lobby = () => {
               <select
                 value={selectedDifficulty}
                 onChange={(e) => setSelectedDifficulty(e.target.value)}
-                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-accent/50 bg-white"
+                className="px-4 py-2 border border-gray-300 rounded-lg focus:outline-none focus:ring-2 focus:ring-blue-300 bg-white"
               >
                 {DIFFICULTIES.map((difficulty) => (
                   <option key={difficulty} value={difficulty}>
@@ -211,14 +212,14 @@ const Lobby = () => {
             ))}
           </div>
         ) : (
-          <div className="bg-white rounded-xl shadow-md border border-gray-100 p-12 text-center animate-fade-in">
-            <h3 className="text-xl font-medium mb-2">No games found</h3>
-            <p className="text-muted-foreground mb-6">
+          <div className="glass rounded-xl p-12 text-center animate-fade-in">
+            <h3 className="text-xl font-medium mb-2 text-gray-800">No games found</h3>
+            <p className="text-gray-600 mb-6">
               Try adjusting your filters or create a new game
             </p>
             <Button 
               onClick={() => setShowCreateDialog(true)}
-              className="animate-pulse hover:animate-none"
+              className="animate-pulse hover:animate-none shadow-md"
             >
               Create New Game
             </Button>
@@ -227,7 +228,7 @@ const Lobby = () => {
       </div>
 
       <Dialog open={showCreateDialog} onOpenChange={setShowCreateDialog}>
-        <DialogContent className="sm:max-w-md animate-scale-in">
+        <DialogContent className="sm:max-w-md animate-scale-in glass">
           <DialogHeader>
             <DialogTitle>Create New Game</DialogTitle>
             <DialogDescription>
@@ -298,7 +299,7 @@ const Lobby = () => {
             <Button variant="outline" onClick={() => setShowCreateDialog(false)}>
               Cancel
             </Button>
-            <Button onClick={handleCreateGame}>Create Game</Button>
+            <Button onClick={handleCreateGame} className="shadow-sm">Create Game</Button>
           </DialogFooter>
         </DialogContent>
       </Dialog>

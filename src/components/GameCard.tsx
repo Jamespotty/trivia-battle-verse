@@ -46,10 +46,10 @@ const GameCard: React.FC<GameCardProps> = ({
       : "text-emerald-600";
 
   return (
-    <div className="card-hover bg-white rounded-xl border border-gray-100 shadow-sm overflow-hidden transition-all duration-300">
+    <div className="card-hover glass rounded-xl overflow-hidden transition-all duration-300">
       <div className="p-5">
         <div className="flex justify-between items-start mb-3">
-          <h3 className="font-medium text-lg text-gray-900">{title}</h3>
+          <h3 className="font-semibold text-lg text-gray-800">{title}</h3>
           <span
             className={`${
               statusVariants[status]
@@ -79,7 +79,7 @@ const GameCard: React.FC<GameCardProps> = ({
         <div className="mt-6">
           {isJoinable ? (
             <Link to={`/game/${id}`} className="w-full">
-              <Button className="w-full transform hover:translate-y-[-2px] transition-all">
+              <Button className="w-full transform hover:translate-y-[-2px] transition-all shadow-sm">
                 Join Game
               </Button>
             </Link>
